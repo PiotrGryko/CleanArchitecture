@@ -7,9 +7,9 @@ data class ProjectListItem(
     val projectId: Long,
     val name: String,
     val ownerLogin: String,
-    val avatar: Uri
+    val avatar: Uri?
 ) {
-    val isAvatarVisible = avatar != Uri.EMPTY
+    val isAvatarVisible = avatar != null
 }
 
 fun Project.toProjectListItem() = ProjectListItem(
@@ -17,7 +17,7 @@ fun Project.toProjectListItem() = ProjectListItem(
     this.name,
     this.owner.login,
     when (this.owner.avatarUrl) {
-        null -> Uri.EMPTY
+        null -> null
         else -> Uri.parse(this.owner.avatarUrl)
     }
 )

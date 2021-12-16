@@ -6,6 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import piotr.example.data.api.GitApi
+import piotr.example.data.db.ProjectsDatabase
+import piotr.example.data.db.ProjectsDatabaseImpl
 import piotr.example.data.db.ProjectsRoomDatabase
 import piotr.example.data.repository.ProjectsRepositoryImpl
 import piotr.example.domain.repository.ProjectsRepository
@@ -21,13 +23,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideProjectsDb(application: Application) : ProjectsRoomDatabase {
-        return ProjectsRoomDatabase.create(application)
+    fun provideProjectsDb(application: Application) : ProjectsDatabase {
+        return ProjectsDatabaseImpl(ProjectsRoomDatabase.create(application))
     }
 
     @Singleton
     @Provides
-    fun provideProjectsRepository(gitApi: GitApi, projectsDatabase: ProjectsRoomDatabase) : piotr.example.domain.repository.ProjectsRepository {
+    fun provideProjectsRepository(gitApi: GitApi, projectsDatabase: ProjectsDatabase) : piotr.example.domain.repository.ProjectsRepository {
         return ProjectsRepositoryImpl(gitApi,projectsDatabase)
     }
 
