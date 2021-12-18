@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GitClient</string>
+    <string name="list_placeholder">Type query to see results</string>
+
 </resources>

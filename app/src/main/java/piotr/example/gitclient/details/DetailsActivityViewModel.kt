@@ -19,7 +19,7 @@ class DetailsActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     private val id = savedStateHandle.get<Long>(Constants.KEY_PROJECT_ID) ?: error("id not passed")
-    private val project = MutableLiveData<Project>()
+     val project = MutableLiveData<Project>()
 
     val projectName = project.map { it.name }
     val ownerName = project.map { it.owner.login }
