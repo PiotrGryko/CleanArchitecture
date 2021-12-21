@@ -9,17 +9,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import piotr.example.domain.Constants
 import piotr.example.domain.model.entity.Project
 import piotr.example.domain.repository.ProjectsRepository
+import piotr.example.domain.usecase.GetProjectFromDatabaseUseCase
 import piotr.example.gitclient.BaseViewModel
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsActivityViewModel @Inject constructor(
-    private val projectsRepository: ProjectsRepository,
+    private val getProjectFromDatabaseUseCase: GetProjectFromDatabaseUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     private val id = savedStateHandle.get<Long>(Constants.KEY_PROJECT_ID) ?: error("id not passed")
-     val project = MutableLiveData<Project>()
+    private val project = MutableLiveData<Project>()
 
     val projectName = project.map { it.name }
     val ownerName = project.map { it.owner.login }
@@ -35,7 +36,7 @@ class DetailsActivityViewModel @Inject constructor(
 
     init {
         launchNetworkOperation {
-            project.postValue(projectsRepository.getProjectFromDatabase(id))
+            project.postValue(getProjectFromDatabaseUseCase.invoke(id))
         }
     }
 

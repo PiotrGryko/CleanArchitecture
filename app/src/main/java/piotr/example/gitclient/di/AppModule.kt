@@ -36,13 +36,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetProjectsFirstPageUseCase(projectsRepository: ProjectsRepository) : GetProjectsListUseCase{
+    fun provideGetProjectsListUserCase(projectsRepository: ProjectsRepository) : GetProjectsListUseCase{
         return GetProjectsListUseCaseImpl(projectsRepository)
     }
 
     @Provides
     @Singleton
-    fun provideGetProjectsNextPageUseCase(projectsRepository: ProjectsRepository) : GetProjectFromDatabaseUseCase{
+    fun provideGetProjectFromDatabaseUseCase(projectsRepository: ProjectsRepository) : GetProjectFromDatabaseUseCase{
         return GetProjectFromDatabaseUseCaseImpl(projectsRepository)
     }
 }
